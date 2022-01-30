@@ -5,30 +5,30 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>KOA2源码解读</title>
     <meta name="generator" content="VuePress 1.9.7">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/docs/favicon.ico">
     <meta name="description" content="逐行解读koa源码">
     
-    <link rel="preload" href="/assets/css/0.styles.64f7ac41.css" as="style"><link rel="preload" href="/assets/js/app.236d39d8.js" as="script"><link rel="preload" href="/assets/js/2.af2a1856.js" as="script"><link rel="preload" href="/assets/js/7.dca7141a.js" as="script"><link rel="prefetch" href="/assets/js/10.0fbe0c60.js"><link rel="prefetch" href="/assets/js/11.0dc2cf5b.js"><link rel="prefetch" href="/assets/js/12.52f558e7.js"><link rel="prefetch" href="/assets/js/13.8e1ba0f6.js"><link rel="prefetch" href="/assets/js/14.e3087130.js"><link rel="prefetch" href="/assets/js/15.c0291e02.js"><link rel="prefetch" href="/assets/js/3.dc5dd0e1.js"><link rel="prefetch" href="/assets/js/4.9aefa921.js"><link rel="prefetch" href="/assets/js/5.497fe5d0.js"><link rel="prefetch" href="/assets/js/6.e652b7d6.js"><link rel="prefetch" href="/assets/js/8.7d32086a.js"><link rel="prefetch" href="/assets/js/9.8beeb989.js">
-    <link rel="stylesheet" href="/assets/css/0.styles.64f7ac41.css">
+    <link rel="preload" href="/docs/assets/css/0.styles.52bb2005.css" as="style"><link rel="preload" href="/docs/assets/js/app.13583c11.js" as="script"><link rel="preload" href="/docs/assets/js/2.af2a1856.js" as="script"><link rel="preload" href="/docs/assets/js/7.2e97ce3f.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.a552d145.js"><link rel="prefetch" href="/docs/assets/js/11.8d1e3cc8.js"><link rel="prefetch" href="/docs/assets/js/12.6f42f32e.js"><link rel="prefetch" href="/docs/assets/js/13.3d5224a7.js"><link rel="prefetch" href="/docs/assets/js/14.e3087130.js"><link rel="prefetch" href="/docs/assets/js/15.faf470ba.js"><link rel="prefetch" href="/docs/assets/js/3.73924e4a.js"><link rel="prefetch" href="/docs/assets/js/4.23170bb5.js"><link rel="prefetch" href="/docs/assets/js/5.b785003b.js"><link rel="prefetch" href="/docs/assets/js/6.e652b7d6.js"><link rel="prefetch" href="/docs/assets/js/8.0b3f34f9.js"><link rel="prefetch" href="/docs/assets/js/9.7f472e9a.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.52bb2005.css">
   </head>
   <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" aria-current="page" class="home-link router-link-exact-active router-link-active"><!----> <span class="site-name">KOA2源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" aria-current="page" class="home-link router-link-exact-active router-link-active"><!----> <span class="site-name">KOA2源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
   Home
-</a></div><div class="nav-item"><a href="/taweew.html" class="nav-link">
+</a></div><div class="nav-item"><a href="/docs/taweew.html" class="nav-link">
   Github
-</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/docs/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
   Home
-</a></div><div class="nav-item"><a href="/taweew.html" class="nav-link">
+</a></div><div class="nav-item"><a href="/docs/taweew.html" class="nav-link">
   Github
 </a></div> <!----></nav>  <!----> </aside> <main aria-labelledby="main-title" class="home"><header class="hero"><!----> <h1 id="main-title">
       KOA2源码解读
     </h1> <p class="description">
       逐行解读koa源码
-    </p> <p class="action"><a href="/koa/" class="nav-link action-button">
+    </p> <p class="action"><a href="/docs/koa/" class="nav-link action-button">
   现在开始→
 </a></p></header> <div class="features"><div class="feature"><h2></h2> <p></p></div><div class="feature"><h2>细致解读</h2> <p>根据注释逐行解读，由浅入深，耐心讲解，看完本教程后，建议再去补充源码处的一些细枝末节。</p></div><div class="feature"><h2></h2> <p></p></div></div> <div class="theme-default-content custom content__default"></div> <div class="footer">
     MIT Licensed | Copyright © 2022-present TANG
   </div></main></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.236d39d8.js" defer></script><script src="/assets/js/2.af2a1856.js" defer></script><script src="/assets/js/7.dca7141a.js" defer></script>
+    <script src="/docs/assets/js/app.13583c11.js" defer></script><script src="/docs/assets/js/2.af2a1856.js" defer></script><script src="/docs/assets/js/7.2e97ce3f.js" defer></script>
   </body>
 </html>
