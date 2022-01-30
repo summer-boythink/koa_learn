@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>其余模块做了什么 | KOA2源码解读</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="逐行解读koa源码">
+    
+    <link rel="preload" href="/assets/css/0.styles.64f7ac41.css" as="style"><link rel="preload" href="/assets/js/app.236d39d8.js" as="script"><link rel="preload" href="/assets/js/2.af2a1856.js" as="script"><link rel="preload" href="/assets/js/11.0dc2cf5b.js" as="script"><link rel="prefetch" href="/assets/js/10.0fbe0c60.js"><link rel="prefetch" href="/assets/js/12.52f558e7.js"><link rel="prefetch" href="/assets/js/13.8e1ba0f6.js"><link rel="prefetch" href="/assets/js/14.e3087130.js"><link rel="prefetch" href="/assets/js/15.c0291e02.js"><link rel="prefetch" href="/assets/js/3.dc5dd0e1.js"><link rel="prefetch" href="/assets/js/4.9aefa921.js"><link rel="prefetch" href="/assets/js/5.497fe5d0.js"><link rel="prefetch" href="/assets/js/6.e652b7d6.js"><link rel="prefetch" href="/assets/js/7.dca7141a.js"><link rel="prefetch" href="/assets/js/8.7d32086a.js"><link rel="prefetch" href="/assets/js/9.8beeb989.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.64f7ac41.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">KOA2源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/koa/main/taweew.html" class="nav-link">
+  Github
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/koa/main/taweew.html" class="nav-link">
+  Github
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/koa/" aria-current="page" class="sidebar-link">koa总览</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>开胃菜</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>大吃一顿</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/koa/main/1.html" class="sidebar-link">关于new Koa做了什么</a></li><li><a href="/koa/main/2.html" aria-current="page" class="active sidebar-link">其余模块做了什么</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/koa/main/2.html#context" class="sidebar-link">context</a></li><li class="sidebar-sub-header"><a href="/koa/main/2.html#response和request" class="sidebar-link">response和request</a></li></ul></li><li><a href="/koa/main/3.html" class="sidebar-link">关于use做了什么</a></li><li><a href="/koa/main/4.html" class="sidebar-link">关于listen做了什么</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>饭后甜点</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="其余模块做了什么"><a href="#其余模块做了什么" class="header-anchor">#</a> 其余模块做了什么</h1> <p>上一节我们讲到<code>Object.create(context)</code>,
+现在我们来看看<code>context</code>,<code>request</code>,<code>response</code>这些模块做了什么</p> <h2 id="context"><a href="#context" class="header-anchor">#</a> context</h2> <p><img src="/imgs/3.png" alt=""></p> <p>最后导出的<code>context</code>是一个<code>Object</code>类型，这个类型里有一些方法,比如<code>onerrer</code>,<code>inspect</code>之类</p> <p><img src="/imgs/5.png" alt=""></p> <p>这一部分除了导出的对象外，更有意思的部分是下面的<code>delegate</code>,还记得我们的<a href="/koa/preposition/1.html">前置知识点一</a>吗</p> <p>这一部分的源码注释如下</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token function">delegate</span><span class="token punctuation">(</span>proto<span class="token punctuation">,</span> <span class="token string">'response'</span><span class="token punctuation">)</span> <span class="token comment">//当访问proto[以下属性]时,用proto.response[以下属性]回应</span>
+  <span class="token punctuation">.</span><span class="token function">method</span><span class="token punctuation">(</span><span class="token string">'attachment'</span><span class="token punctuation">)</span> <span class="token comment">//method表示这类属性是函数</span>
+    <span class="token comment">// ...</span>
+  <span class="token punctuation">.</span><span class="token function">access</span><span class="token punctuation">(</span><span class="token string">'status'</span><span class="token punctuation">)</span> <span class="token comment">//access表示这类属性可以可读可写</span>
+    <span class="token comment">// ...</span>
+  <span class="token punctuation">.</span><span class="token function">getter</span><span class="token punctuation">(</span><span class="token string">'headerSent'</span><span class="token punctuation">)</span> <span class="token comment">//getter表示这类属性只读</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>这里的意思，其实就是当我们访问<code>proto</code>上面的方法或者属性，我们让<code>proto.response</code>上的同名属性或方法来回应这些访问，
+<code>proto</code>是什么，就是我们<code>exports</code>出去的那个模块，就是<code>context</code></p> <p>所以这一段意思就是，访问<code>context</code>上面某个属性，我们用<code>context.response</code>上的同名属性回应</p> <p>你有没有想起来，我们在使用koa时，我们用<code>ctx.body</code>,但是<code>body</code>这个属性真的在<code>ctx</code>上吗?
+接下来，我们来看看<code>response</code>这个模块</p> <h2 id="response和request"><a href="#response和request" class="header-anchor">#</a> response和request</h2> <p><img src="/imgs/7.png" alt="request"></p> <p>↑ <code>request</code>部分</p> <p><img src="/imgs/8.png" alt="response"></p> <p>↑ <code>response</code>部分</p> <p>这两张其实分别对应的就是我们访问一个网页时，<code>request headers</code>和<code>response headers</code>的内容</p> <p>然后，聪明可爱的你应该注意到了，在第二张图中，有<code>(get) body</code>,说明当我们访问<code>ctx.body</code>时候，
+实际上，处理属性访问的是<code>ctx.response.body</code>.</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/koa/main/1.html" class="prev">
+        关于new Koa做了什么
+      </a></span> <span class="next"><a href="/koa/main/3.html">
+        关于use做了什么
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.236d39d8.js" defer></script><script src="/assets/js/2.af2a1856.js" defer></script><script src="/assets/js/11.0dc2cf5b.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>关于use做了什么 | KOA2源码解读</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="逐行解读koa源码">
+    
+    <link rel="preload" href="/assets/css/0.styles.64f7ac41.css" as="style"><link rel="preload" href="/assets/js/app.236d39d8.js" as="script"><link rel="preload" href="/assets/js/2.af2a1856.js" as="script"><link rel="preload" href="/assets/js/12.52f558e7.js" as="script"><link rel="prefetch" href="/assets/js/10.0fbe0c60.js"><link rel="prefetch" href="/assets/js/11.0dc2cf5b.js"><link rel="prefetch" href="/assets/js/13.8e1ba0f6.js"><link rel="prefetch" href="/assets/js/14.e3087130.js"><link rel="prefetch" href="/assets/js/15.c0291e02.js"><link rel="prefetch" href="/assets/js/3.dc5dd0e1.js"><link rel="prefetch" href="/assets/js/4.9aefa921.js"><link rel="prefetch" href="/assets/js/5.497fe5d0.js"><link rel="prefetch" href="/assets/js/6.e652b7d6.js"><link rel="prefetch" href="/assets/js/7.dca7141a.js"><link rel="prefetch" href="/assets/js/8.7d32086a.js"><link rel="prefetch" href="/assets/js/9.8beeb989.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.64f7ac41.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">KOA2源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/koa/main/taweew.html" class="nav-link">
+  Github
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/koa/main/taweew.html" class="nav-link">
+  Github
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/koa/" aria-current="page" class="sidebar-link">koa总览</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>开胃菜</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>大吃一顿</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/koa/main/1.html" class="sidebar-link">关于new Koa做了什么</a></li><li><a href="/koa/main/2.html" class="sidebar-link">其余模块做了什么</a></li><li><a href="/koa/main/3.html" aria-current="page" class="active sidebar-link">关于use做了什么</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/koa/main/3.html#函数使用部分" class="sidebar-link">函数使用部分</a></li><li class="sidebar-sub-header"><a href="/koa/main/3.html#源码部分" class="sidebar-link">源码部分</a></li></ul></li><li><a href="/koa/main/4.html" class="sidebar-link">关于listen做了什么</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>饭后甜点</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="关于use做了什么"><a href="#关于use做了什么" class="header-anchor">#</a> 关于use做了什么</h1> <h2 id="函数使用部分"><a href="#函数使用部分" class="header-anchor">#</a> 函数使用部分</h2> <div class="language-js line-numbers-mode"><pre class="language-js"><code>app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">ctx<span class="token punctuation">,</span>next</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">await</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h2 id="源码部分"><a href="#源码部分" class="header-anchor">#</a> 源码部分</h2> <div class="language-js line-numbers-mode"><pre class="language-js"><code>  <span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//如果传入进来的不是一个函数，报错</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> fn <span class="token operator">!==</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">TypeError</span><span class="token punctuation">(</span><span class="token string">'middleware must be a function!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//如果这个函数是用generator的，不是用async的函数，警告，并将该函数转换成async的样子</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isGeneratorFunction</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">deprecate</span><span class="token punctuation">(</span><span class="token string">'Support for generators will be removed in v3. '</span> <span class="token operator">+</span>
+                <span class="token string">'See the documentation for examples of how to convert old middleware '</span> <span class="token operator">+</span>
+                <span class="token string">'https://github.com/koajs/koa/blob/master/docs/migration.md'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+      fn <span class="token operator">=</span> <span class="token function">convert</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 可以运行package.json里面的命令，运行一下，看看效果</span>
+    <span class="token comment">// &quot;debug_windows&quot;: &quot;set DEBUG=koa:application &amp; node ./app.js&quot;,</span>
+    <span class="token comment">// &quot;debug_linux&quot;: &quot;DEBUG=koa:application node ./app.js&quot;</span>
+
+    <span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">'use %s'</span><span class="token punctuation">,</span> fn<span class="token punctuation">.</span>_name <span class="token operator">||</span> fn<span class="token punctuation">.</span>name <span class="token operator">||</span> <span class="token string">'-'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token keyword">this</span><span class="token punctuation">.</span>middleware<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//将中间件推入middleware这个数组里</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span> <span class="token comment">//返回this，方便链式调用</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p>可以看见，use里面最<code>主要的部分</code>就是在<a href="/koa/preposition/2.html">前置知识点二</a>说过的那样,把传入来的函数，
+放入到<code>middleware</code>中，方便后面对这个数组里面的子项进行递归调用.</p> <p>熟悉koa的小伙伴应该知道，接下来，我们只需要<code>listen(port)</code>就可以启动整个项目了，那么，最后一步，让我们来看看<code>listen</code>做了什么</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/koa/main/2.html" class="prev">
+        其余模块做了什么
+      </a></span> <span class="next"><a href="/koa/main/4.html">
+        关于listen做了什么
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.236d39d8.js" defer></script><script src="/assets/js/2.af2a1856.js" defer></script><script src="/assets/js/12.52f558e7.js" defer></script>
+  </body>
+</html>
